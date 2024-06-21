@@ -1,4 +1,4 @@
-package com.github.shalva97.digidentity.ui.theme
+package com.github.shalva97.digidentity.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
