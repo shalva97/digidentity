@@ -50,4 +50,4 @@ private fun OkHttpClient.Builder.ignoreAllSSLErrors(): OkHttpClient.Builder {
     return this
 }
 
-const val PROXY_IP = "192.168.88.168"
+const val PROXY_IP = "192.168.88.166"
