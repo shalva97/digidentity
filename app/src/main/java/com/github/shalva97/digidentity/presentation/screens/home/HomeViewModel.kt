@@ -2,9 +2,8 @@ package com.github.shalva97.digidentity.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.shalva97.digidentity.data.catalog.di.Catalogs
 import com.github.shalva97.digidentity.domain.CatalogRepository
-import com.github.shalva97.digidentity.domain.models.CatalogItem
+import com.github.shalva97.digidentity.domain.models.Catalog
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,5 +32,5 @@ class HomeViewModel @Inject constructor(
 sealed interface HomeState {
     data object Error : HomeState
     data object Loading : HomeState
-    data class Catalogs(val items: List<CatalogItem>) : HomeState
+    data class Catalogs(val items: List<Catalog>) : HomeState
 }

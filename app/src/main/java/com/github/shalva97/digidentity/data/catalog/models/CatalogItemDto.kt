@@ -1,6 +1,6 @@
 package com.github.shalva97.digidentity.data.catalog.models
 
-import com.github.shalva97.digidentity.domain.models.CatalogItem
+import com.github.shalva97.digidentity.domain.models.Catalog
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -21,6 +21,6 @@ data class CatalogItemDto(
  val id: String,
 )
 
-fun CatalogItemDto.toDomainModel(): CatalogItem {
-    return CatalogItem(text, confidence, image, id)
+fun CatalogItemDto.toDomainModel(): Catalog {
+    return Catalog(text, confidence, image, id)
 }

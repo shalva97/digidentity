@@ -1,9 +1,6 @@
 package com.github.shalva97.digidentity.domain.models
 
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
-
-data class CatalogItem(
+data class Catalog(
     val text: String,
     val confidence: Float,
     val image: String,

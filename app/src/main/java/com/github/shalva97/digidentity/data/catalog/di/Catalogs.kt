@@ -8,7 +8,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.create
@@ -16,7 +15,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class Catalogs {
+class CatalogsModule {
 
     @Provides
     @Singleton

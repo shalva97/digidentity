@@ -9,13 +9,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import com.github.shalva97.digidentity.R
+import com.github.shalva97.digidentity.presentation.screens.home.componenets.CatalogList
 
 @Composable
 fun HomeScreen(state: HomeState) {
 
     when (state) {
         is HomeState.Catalogs -> {
-            Text(text = state.items.size.toString())
+            CatalogList(state = state)
         }
         HomeState.Error -> {
             Text(text = stringResource(R.string.something_went_wrong))
