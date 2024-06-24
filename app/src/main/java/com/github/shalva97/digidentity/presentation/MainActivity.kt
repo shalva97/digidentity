@@ -7,7 +7,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -16,6 +15,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.paging.compose.collectAsLazyPagingItems
 import com.github.shalva97.digidentity.presentation.navigation.Home
 import com.github.shalva97.digidentity.presentation.navigation.ItemDetails
 import com.github.shalva97.digidentity.presentation.screens.details.DetailsScreen
@@ -50,7 +50,8 @@ fun DigidentityApp() {
             composable<Home> {
                 val viewmodel: HomeViewModel = hiltViewModel()
                 val state by viewmodel.state.collectAsState()
-                HomeScreen(state)
+                val catalogs = viewmodel.catalogs.collectAsLazyPagingItems()
+                HomeScreen(state, catalogs)
             }
             composable<ItemDetails> {
                 val viewModel: DetailsViewModel = hiltViewModel()

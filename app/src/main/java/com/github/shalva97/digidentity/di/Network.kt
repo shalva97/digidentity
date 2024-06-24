@@ -25,7 +25,7 @@ class Network {
         return OkHttpClient.Builder()
             .apply {
                 if (featureFlags.useProxyServer) {
-                    proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(PROXY_IP, 8888)))
+                    proxy(Proxy(Proxy.Type.HTTP, InetSocketAddress(PROXY_IP, PORT)))
                         .ignoreAllSSLErrors()
                 }
             }.build()
@@ -50,4 +50,5 @@ private fun OkHttpClient.Builder.ignoreAllSSLErrors(): OkHttpClient.Builder {
     return this
 }
 
-const val PROXY_IP = "192.168.88.158"
+private const val PROXY_IP = "192.168.88.158"
+private const val PORT = 8888

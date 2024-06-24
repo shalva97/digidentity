@@ -15,16 +15,16 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import com.github.shalva97.digidentity.domain.models.Catalog
-import com.github.shalva97.digidentity.presentation.screens.home.HomeState
 import com.github.shalva97.digidentity.presentation.theme.DigidentityTheme
 
 @Composable
-fun CatalogList(modifier: Modifier = Modifier, state: HomeState.Catalogs) {
+fun CatalogList(modifier: Modifier = Modifier, state: LazyPagingItems<Catalog>) {
     LazyColumn {
-        items(state.items.size) {
-            CatalogItem(state.items[it])
+        items(state.itemCount) { index ->
+            state[index]?.let { it1 -> CatalogItem(item = it1) }
         }
     }
 }
@@ -41,7 +41,9 @@ fun CatalogItem(item: Catalog) {
         },
         leadingContent = {
             AsyncImage(
-                modifier = Modifier.size(64.dp).clip(RoundedCornerShape(5.dp)),
+                modifier = Modifier
+                    .size(64.dp)
+                    .clip(RoundedCornerShape(5.dp)),
                 model = item.image,
                 contentDescription = "Image for ${item.text}",
             )
@@ -59,9 +61,10 @@ private fun ItemPreview(
 ) {
     DigidentityTheme {
         Surface {
-            CatalogList(
-                state = HomeState.Catalogs(catalogs)
-            )
+            // TODO
+//            CatalogList(
+//                state = HomeState.Catalogs(catalogs)
+//            )
         }
     }
 }
