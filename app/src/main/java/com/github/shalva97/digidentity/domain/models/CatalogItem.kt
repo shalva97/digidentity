@@ -4,6 +4,8 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 data class CatalogItem(
-    val sinceId: String,
-    val maxId: String,
+    val text: String,
+    val confidence: Float,
+    val image: String,
+    val id: String,
 )

@@ -12,6 +12,7 @@ import com.github.shalva97.digidentity.R
 
 @Composable
 fun HomeScreen(state: HomeState) {
+
     when (state) {
         is HomeState.Catalogs -> {
             Text(text = state.items.size.toString())

@@ -2,6 +2,7 @@ package com.github.shalva97.digidentity.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.shalva97.digidentity.data.catalog.di.Catalogs
 import com.github.shalva97.digidentity.domain.CatalogRepository
 import com.github.shalva97.digidentity.domain.models.CatalogItem
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +25,7 @@ class HomeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(exceptionHandler) {
-            println(catalogRepository.getItems())
+            _state.emit(HomeState.Catalogs(catalogRepository.getItems()))
         }
     }
 }
