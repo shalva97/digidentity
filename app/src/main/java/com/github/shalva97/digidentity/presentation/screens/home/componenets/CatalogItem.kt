@@ -2,7 +2,6 @@ package com.github.shalva97.digidentity.presentation.screens.home.componenets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
@@ -15,19 +14,9 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
-import androidx.paging.compose.LazyPagingItems
 import coil.compose.AsyncImage
 import com.github.shalva97.digidentity.domain.models.Catalog
 import com.github.shalva97.digidentity.presentation.theme.DigidentityTheme
-
-@Composable
-fun CatalogList(modifier: Modifier = Modifier, state: LazyPagingItems<Catalog>) {
-    LazyColumn {
-        items(state.itemCount) { index ->
-            state[index]?.let { it1 -> CatalogItem(item = it1) }
-        }
-    }
-}
 
 @Composable
 fun CatalogItem(item: Catalog) {

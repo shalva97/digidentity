@@ -1,38 +1,37 @@
 package com.github.shalva97.digidentity.presentation.screens.home
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.material3.LinearProgressIndicator
-import androidx.compose.material3.Text
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
+import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
-import com.github.shalva97.digidentity.R
 import com.github.shalva97.digidentity.domain.models.Catalog
-import com.github.shalva97.digidentity.presentation.screens.home.componenets.CatalogList
+import com.github.shalva97.digidentity.presentation.screens.home.componenets.CatalogItem
 
 @Composable
-fun HomeScreen(state: HomeState, catalogs: LazyPagingItems<Catalog>) {
-
-    when (state) {
-        is HomeState.Catalogs -> {
-            CatalogList(state = catalogs)
-        }
-        HomeState.Error -> {
-            Text(text = stringResource(R.string.something_went_wrong))
+fun HomeScreen(catalogs: LazyPagingItems<Catalog>) {
+    LazyColumn {
+        items(catalogs.itemCount) { index ->
+            catalogs[index]?.let { it1 -> CatalogItem(item = it1) }
         }
 
-        HomeState.Loading -> {
-            Column {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.loading_please_wait),
-                    textAlign = TextAlign.Center
-                )
+        item {
+            if (catalogs.loadState.append is LoadState.Loading) {
+                CircularProgressIndicator()
             }
         }
     }
+//    if (catalogs.loadState.hasError) {
+//        Text(text = stringResource(R.string.something_went_wrong))
+//    }
+
+
+//    Column {
+//        LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+//        Text(
+//            modifier = Modifier.fillMaxWidth(),
+//            text = stringResource(R.string.loading_please_wait),
+//            textAlign = TextAlign.Center
+//        )
+//    }
 }

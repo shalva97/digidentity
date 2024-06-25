@@ -54,5 +54,4 @@ class CatalogRemoteMediator(
             MediatorResult.Error(e)
         }
     }
-
 }
