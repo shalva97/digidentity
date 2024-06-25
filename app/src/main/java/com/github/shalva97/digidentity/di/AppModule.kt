@@ -26,7 +26,7 @@ class AppModule {
         catalogDb: CatalogDatabase,
     ): Pager<Int, CatalogEntity> {
         return Pager(
-            config = PagingConfig(10),
+            config = PagingConfig(10, prefetchDistance = 0, initialLoadSize = 10),
             remoteMediator = CatalogRemoteMediator(catalogAPI, catalogDb),
             pagingSourceFactory = {
                 catalogDb.dao.pagingSource()

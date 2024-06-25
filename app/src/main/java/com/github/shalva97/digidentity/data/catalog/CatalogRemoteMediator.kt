@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalPagingApi::class, ExperimentalPagingApi::class)
+@file:OptIn(ExperimentalPagingApi::class)
 
 package com.github.shalva97.digidentity.data.catalog
 
@@ -11,13 +11,18 @@ import com.github.shalva97.digidentity.data.catalog.local.CatalogDatabase
 import com.github.shalva97.digidentity.data.catalog.local.CatalogEntity
 import com.github.shalva97.digidentity.data.catalog.mappers.toEntity
 import com.github.shalva97.digidentity.domain.CatalogRepository
+import com.github.shalva97.digidentity.domain.models.Catalog
+import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
+import javax.inject.Inject
 
-class CatalogRemoteMediator(
+class CatalogRemoteMediator @Inject constructor(
     private val catalogAPI: CatalogRepository,
     private val catalogDb: CatalogDatabase,
 ) : RemoteMediator<Int, CatalogEntity>() {
+
+    private var nextPageIDIndex: String? = null
 
     override suspend fun load(
         loadType: LoadType,
@@ -25,17 +30,22 @@ class CatalogRemoteMediator(
     ): MediatorResult {
         return try {
             val loadKey = when (loadType) {
-                LoadType.REFRESH -> null
+                LoadType.REFRESH -> {
+                    null
+                }
                 LoadType.PREPEND -> return MediatorResult.Success(
                     endOfPaginationReached = true
                 )
 
                 LoadType.APPEND -> {
                     state.lastItemOrNull()?.id
+                    nextPageIDIndex
                 }
             }
 
             val catalogs = catalogAPI.getItems(maxID = loadKey)
+
+            nextPageIDIndex = catalogs.lastOrNull()?.id
 
             catalogDb.withTransaction {
                 if (loadType == LoadType.REFRESH) {
@@ -44,7 +54,6 @@ class CatalogRemoteMediator(
                 val catalogEntities = catalogs.map { it.toEntity() }
                 catalogDb.dao.upsertAll(catalogEntities)
             }
-
             MediatorResult.Success(
                 endOfPaginationReached = catalogs.isEmpty()
             )
@@ -54,4 +63,17 @@ class CatalogRemoteMediator(
             MediatorResult.Error(e)
         }
     }
+}
+
+var offset = 0
+
+suspend fun generateRandomData(): List<Catalog> {
+    val list = List(10) {
+        val id = offset + it
+        Catalog("$id.blah", 0.2f, "", id.toString())
+    }
+    offset += 10
+    println("--- generated 10 new items")
+    delay(1_000)
+    return list
 }

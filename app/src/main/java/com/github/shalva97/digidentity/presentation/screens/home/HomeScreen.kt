@@ -1,6 +1,7 @@
 package com.github.shalva97.digidentity.presentation.screens.home
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularProgressIndicator
@@ -31,7 +32,7 @@ fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>) {
         }
 
         else -> {
-            LazyColumn {
+            LazyColumn(Modifier.fillMaxSize()) {
                 item {
                     if (catalogsPaging.loadState.hasError)
                         Text(text = stringResource(R.string.something_went_wrong))
