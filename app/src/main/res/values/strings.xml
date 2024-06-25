@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">Digidentity</string>
-    <string name="something_went_wrong">Something went wrong, please try again later.</string>
+    <string name="something_went_wrong">Unable to connect to the internet.</string>
     <string name="loading_please_wait">Loading, please wait</string>
 </resources>

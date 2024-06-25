@@ -49,8 +49,8 @@ fun DigidentityApp() {
         ) {
             composable<Home> {
                 val viewmodel: HomeViewModel = hiltViewModel()
-                val catalogs = viewmodel.catalogs.collectAsLazyPagingItems()
-                HomeScreen(catalogs)
+                val catalogsPaging = viewmodel.catalogs.collectAsLazyPagingItems()
+                HomeScreen(catalogsPaging)
             }
             composable<ItemDetails> {
                 val viewModel: DetailsViewModel = hiltViewModel()
