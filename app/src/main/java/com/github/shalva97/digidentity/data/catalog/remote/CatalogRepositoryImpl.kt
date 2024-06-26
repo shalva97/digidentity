@@ -1,5 +1,6 @@
 package com.github.shalva97.digidentity.data.catalog.remote
 
+import com.github.shalva97.digidentity.data.catalog.local.CatalogDatabase
 import com.github.shalva97.digidentity.data.catalog.mappers.toDomainModel
 import com.github.shalva97.digidentity.di.Dispatcher
 import com.github.shalva97.digidentity.di.Dispatchers
@@ -12,11 +13,16 @@ import javax.inject.Inject
 class CatalogRepositoryImpl @Inject constructor(
     private val catalogRemoteDataSource: CatalogRemoteDataSource,
     @Dispatcher(Dispatchers.IO) val ioDispatcher: CoroutineDispatcher,
+    private val catalogDb: CatalogDatabase,
 ) : CatalogRepository {
     override suspend fun getItems(
         sinceID: String?,
         maxID: String?,
     ): List<Catalog> = withContext(ioDispatcher) {
         catalogRemoteDataSource.getCatalogs(sinceID, maxID).map { it.toDomainModel() }
+    }
+
+    override suspend fun findItemBy(id: String): Catalog? = withContext(ioDispatcher) {
+        catalogDb.dao.getCatalogById(id)?.toDomainModel()
     }
 }

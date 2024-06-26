@@ -2,6 +2,7 @@
 
 package com.github.shalva97.digidentity.presentation.screens.home
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -29,7 +30,7 @@ import com.github.shalva97.digidentity.domain.models.Catalog
 import com.github.shalva97.digidentity.presentation.screens.home.componenets.CatalogItem
 
 @Composable
-fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>) {
+fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>, onCatalogClick: (id: String) -> Unit) {
     Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
         Column(
             Modifier
@@ -48,7 +49,11 @@ fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>) {
                     items(
                         catalogsPaging.itemCount,
                         key = catalogsPaging.itemKey { it.id }) { index ->
-                        catalogsPaging[index]?.let { CatalogItem(item = it) }
+                        catalogsPaging[index]?.let {
+                            CatalogItem(modifier = Modifier.clickable {
+                                onCatalogClick.invoke(it.id)
+                            }, item = it)
+                        }
                     }
                     item {
                         if (catalogsPaging.loadState.append is LoadState.Loading) {

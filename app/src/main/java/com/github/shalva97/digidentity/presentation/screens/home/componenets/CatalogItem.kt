@@ -21,8 +21,9 @@ import com.github.shalva97.digidentity.domain.models.Catalog
 import com.github.shalva97.digidentity.presentation.theme.DigidentityTheme
 
 @Composable
-fun CatalogItem(item: Catalog) {
+fun CatalogItem(modifier: Modifier = Modifier, item: Catalog) {
     ListItem(
+        modifier = modifier,
         headlineContent = { Text(item.text) },
         supportingContent = {
             Column {
@@ -54,7 +55,7 @@ private fun ItemPreview(
         Surface {
             LazyColumn {
                 items(catalogs) {
-                    CatalogItem(it)
+                    CatalogItem(item = it)
                 }
             }
         }

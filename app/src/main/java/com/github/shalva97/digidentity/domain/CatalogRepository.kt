@@ -7,4 +7,6 @@ interface CatalogRepository {
         sinceID: String? = null,
         maxID: String? = null,
     ): List<Catalog>
+
+    suspend fun findItemBy(id: String): Catalog?
 }
