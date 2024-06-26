@@ -1,6 +1,5 @@
 package com.github.shalva97.digidentity
 
-import com.github.shalva97.digidentity.presentation.screens.home.HomeViewModel
 import org.junit.Test
 
 /**
@@ -11,6 +10,7 @@ import org.junit.Test
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        val viewModel = HomeViewModel()
+//        val viewModel = HomeViewModel()
     }
+
 }

@@ -16,4 +16,7 @@ interface CatalogDao {
 
     @Query("DELETE FROM catalogentity")
     suspend fun clearAll()
+
+    @Query("SELECT * FROM CatalogEntity WHERE id = :catalogId")
+    fun getCatalogById(catalogId: String): CatalogEntity?
 }
