@@ -1,4 +1,4 @@
-package com.github.shalva97.digidentity.data.catalog.di
+package com.github.shalva97.digidentity.data.catalog.remote.di
 
 import com.github.shalva97.digidentity.data.catalog.remote.CatalogAPI
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory

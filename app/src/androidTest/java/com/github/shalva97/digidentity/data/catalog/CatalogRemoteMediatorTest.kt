@@ -4,9 +4,9 @@ import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import com.github.shalva97.digidentity.data.catalog.di.CatalogRepoBinds
 import com.github.shalva97.digidentity.data.catalog.local.CatalogDatabase
 import com.github.shalva97.digidentity.data.catalog.local.di.DatabaseModule
+import com.github.shalva97.digidentity.data.catalog.remote.di.CatalogRepoBinds
 import com.github.shalva97.digidentity.domain.CatalogRepository
 import com.github.shalva97.digidentity.domain.models.Catalog
 import com.github.shalva97.digidentity.fakes.FakeCatalogRepository
@@ -43,6 +43,10 @@ class CatalogRemoteMediatorTest {
         ApplicationProvider.getApplicationContext(),
         CatalogDatabase::class.java
     ).build()
+
+    @BindValue
+    @JvmField
+    val mockDao = mockDb.dao
 
     @Inject
     lateinit var pagingData: Flow<PagingData<Catalog>>

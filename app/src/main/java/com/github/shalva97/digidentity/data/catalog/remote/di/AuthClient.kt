@@ -1,4 +1,4 @@
-package com.github.shalva97.digidentity.data.catalog.di
+package com.github.shalva97.digidentity.data.catalog.remote.di
 
 import javax.inject.Qualifier
 
