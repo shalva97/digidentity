@@ -19,32 +19,25 @@ import com.github.shalva97.digidentity.presentation.screens.home.componenets.Cat
 
 @Composable
 fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>) {
-    when {
-        catalogsPaging.loadState.refresh is LoadState.Loading -> {
-            Column {
-                LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(R.string.loading_please_wait),
-                    textAlign = TextAlign.Center
-                )
-            }
+    Column {
+        if (catalogsPaging.loadState.refresh is LoadState.Loading) {
+            LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = stringResource(R.string.loading_please_wait),
+                textAlign = TextAlign.Center
+            )
         }
+        if (catalogsPaging.loadState.hasError)
+            Text(text = stringResource(R.string.something_went_wrong))
+        LazyColumn(Modifier.fillMaxSize()) {
+            items(catalogsPaging.itemCount) { index ->
+                catalogsPaging[index]?.let { CatalogItem(item = it) }
+            }
 
-        else -> {
-            LazyColumn(Modifier.fillMaxSize()) {
-                item {
-                    if (catalogsPaging.loadState.hasError)
-                        Text(text = stringResource(R.string.something_went_wrong))
-                }
-                items(catalogsPaging.itemCount) { index ->
-                    catalogsPaging[index]?.let { it1 -> CatalogItem(item = it1) }
-                }
-
-                item {
-                    if (catalogsPaging.loadState.append is LoadState.Loading) {
-                        CircularProgressIndicator()
-                    }
+            item {
+                if (catalogsPaging.loadState.append is LoadState.Loading) {
+                    CircularProgressIndicator()
                 }
             }
         }
