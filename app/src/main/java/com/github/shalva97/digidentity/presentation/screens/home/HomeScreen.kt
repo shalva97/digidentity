@@ -63,5 +63,4 @@ fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>, onCatalogClick: (id: St
             }
         }
     }
-
 }

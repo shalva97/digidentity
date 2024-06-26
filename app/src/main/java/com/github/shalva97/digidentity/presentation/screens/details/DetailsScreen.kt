@@ -1,7 +1,13 @@
+@file:OptIn(ExperimentalLayoutApi::class)
+
 package com.github.shalva97.digidentity.presentation.screens.details
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -11,6 +17,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -39,7 +48,7 @@ fun DetailsScreen(state: DetailsState) {
                 }
 
                 DetailsState.Loading -> {
-                    Text(text = "Loading...")
+                    Text(text = stringResource(R.string.loading))
                 }
             }
         }
@@ -47,25 +56,40 @@ fun DetailsScreen(state: DetailsState) {
 }
 
 @Composable
-fun CatalogDetails(item: Catalog) {
-    AsyncImage(
-        modifier = Modifier
-            .aspectRatio(1f)
-            .clip(RoundedCornerShape(5.dp)),
-        model = item.image,
-        contentDescription = stringResource(R.string.image_for, item.text),
-    )
-    HorizontalDivider()
-    Text(text = stringResource(R.string.url, item.image))
-    HorizontalDivider()
-    Text(text = stringResource(R.string.text, item.text))
-    HorizontalDivider()
-    Text(text = stringResource(R.string.id, item.id))
-    HorizontalDivider()
-    Text(text = stringResource(R.string.confidence, item.confidence))
+fun CatalogDetails(item: Catalog, imagePlaceholder: Painter? = null) {
+    AdaptivePane {
+        AsyncImage(
+            modifier = Modifier
+                .aspectRatio(1f)
+                .fillMaxSize()
+                .clip(RoundedCornerShape(5.dp)),
+            model = item.image,
+            contentDescription = stringResource(R.string.image_for, item.text),
+            placeholder = imagePlaceholder
+        )
+
+        Column(Modifier.padding(start = 16.dp)) {
+            Text(text = stringResource(R.string.url, item.image))
+            HorizontalDivider()
+            Text(text = stringResource(R.string.text, item.text))
+            HorizontalDivider()
+            Text(text = stringResource(R.string.id, item.id))
+            HorizontalDivider()
+            Text(text = stringResource(R.string.confidence, item.confidence))
+        }
+    }
+}
+
+@Composable
+fun AdaptivePane(content: @Composable () -> Unit) {
+    when (LocalConfiguration.current.orientation) {
+        Configuration.ORIENTATION_LANDSCAPE -> Row { content() }
+        else -> Column { content() }
+    }
 }
 
 @Preview
+@Preview(device = "spec:parent=pixel_5,orientation=landscape")
 @Composable
 private fun previewDetails(
     @PreviewParameter(CatalogPreviewParameterProvider::class)
@@ -73,8 +97,11 @@ private fun previewDetails(
 ) {
     DigidentityTheme {
         Surface {
-            Column {
-                CatalogDetails(catalogs.first())
+            Column(Modifier.fillMaxSize()) {
+                CatalogDetails(
+                    catalogs.first(),
+                    imagePlaceholder = painterResource(id = R.drawable.ic_launcher_background)
+                )
             }
         }
     }
