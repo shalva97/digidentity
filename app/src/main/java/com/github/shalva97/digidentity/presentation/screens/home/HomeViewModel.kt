@@ -2,20 +2,17 @@ package com.github.shalva97.digidentity.presentation.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.Pager
+import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import androidx.paging.map
-import com.github.shalva97.digidentity.data.catalog.local.CatalogEntity
-import com.github.shalva97.digidentity.data.catalog.mappers.toDomainModel
+import com.github.shalva97.digidentity.domain.models.Catalog
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    pager: Pager<Int, CatalogEntity>,
+    pager: Flow<PagingData<Catalog>>,
 ) : ViewModel() {
 
-    val catalogs = pager.flow.map { it.map { item -> item.toDomainModel() } }
-        .cachedIn(viewModelScope)
+    val catalogs = pager.cachedIn(viewModelScope)
 }

@@ -1,13 +1,11 @@
 package com.github.shalva97.digidentity.data.catalog
 
-import androidx.paging.Pager
 import androidx.paging.PagingData
 import androidx.paging.testing.asSnapshot
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import com.github.shalva97.digidentity.data.catalog.di.CatalogRepoBinds
 import com.github.shalva97.digidentity.data.catalog.local.CatalogDatabase
-import com.github.shalva97.digidentity.data.catalog.local.CatalogEntity
 import com.github.shalva97.digidentity.data.catalog.local.di.DatabaseModule
 import com.github.shalva97.digidentity.domain.CatalogRepository
 import com.github.shalva97.digidentity.domain.models.Catalog
@@ -47,13 +45,13 @@ class CatalogRemoteMediatorTest {
     ).build()
 
     @Inject
-    lateinit var pager: Pager<Int, CatalogEntity>
+    lateinit var pagingData: Flow<PagingData<Catalog>>
     private lateinit var homeViewModel: HomeViewModel
 
     @Before
     fun setUp() {
         hiltRule.inject()
-        homeViewModel = HomeViewModel(pager)
+        homeViewModel = HomeViewModel(pagingData)
     }
 
     @After
