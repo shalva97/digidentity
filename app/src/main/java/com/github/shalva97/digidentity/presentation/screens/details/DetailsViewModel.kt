@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
-import com.github.shalva97.digidentity.domain.CatalogRepository
+import com.github.shalva97.digidentity.domain.LocalCatalogRepository
 import com.github.shalva97.digidentity.domain.models.Catalog
 import com.github.shalva97.digidentity.presentation.navigation.ItemDetails
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailsViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val catalogRepository: CatalogRepository,
+    private val catalogRepository: LocalCatalogRepository,
 ) : ViewModel() {
 
     private val details: ItemDetails = savedStateHandle.toRoute()

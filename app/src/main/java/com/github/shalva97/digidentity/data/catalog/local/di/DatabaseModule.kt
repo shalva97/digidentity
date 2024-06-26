@@ -2,6 +2,7 @@ package com.github.shalva97.digidentity.data.catalog.local.di
 
 import android.content.Context
 import androidx.room.Room
+import com.github.shalva97.digidentity.data.catalog.local.CatalogDao
 import com.github.shalva97.digidentity.data.catalog.local.CatalogDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,5 +22,11 @@ class DatabaseModule {
             CatalogDatabase::class.java,
             "catalog.db"
         ).build()
+    }
+
+    @Provides
+    @Singleton
+    fun provideCatalogDao(db: CatalogDatabase): CatalogDao {
+        return db.dao
     }
 }
