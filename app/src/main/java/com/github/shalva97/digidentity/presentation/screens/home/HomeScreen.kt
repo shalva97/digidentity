@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.paging.LoadState
@@ -26,7 +27,9 @@ import com.github.shalva97.digidentity.presentation.screens.home.componenets.Cat
 
 @Composable
 fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>, onCatalogClick: (id: String) -> Unit) {
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+    Scaffold(modifier = Modifier
+        .fillMaxSize()
+        .testTag("HomeScreen")) { innerPadding ->
         Column(
             Modifier
                 .fillMaxSize()
