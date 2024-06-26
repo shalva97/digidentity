@@ -29,7 +29,11 @@ fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>) {
             )
         }
         if (catalogsPaging.loadState.hasError)
-            Text(text = stringResource(R.string.something_went_wrong))
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                text = stringResource(R.string.something_went_wrong)
+            )
         LazyColumn(Modifier.fillMaxSize()) {
             items(catalogsPaging.itemCount) { index ->
                 catalogsPaging[index]?.let { CatalogItem(item = it) }
