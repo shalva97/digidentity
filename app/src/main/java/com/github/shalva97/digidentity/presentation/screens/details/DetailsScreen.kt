@@ -31,7 +31,7 @@ fun DetailsScreen(state: DetailsState) {
         ) {
             when (state) {
                 DetailsState.Error -> {
-                    Text(text = "Something went wrong.")
+                    Text(text = stringResource(id = R.string.something_went_wrong))
                 }
 
                 is DetailsState.Item -> {
@@ -53,7 +53,7 @@ fun CatalogDetails(item: Catalog) {
             .aspectRatio(1f)
             .clip(RoundedCornerShape(5.dp)),
         model = item.image,
-        contentDescription = "Image for ${item.text}",
+        contentDescription = stringResource(R.string.image_for, item.text),
     )
     HorizontalDivider()
     Text(text = stringResource(R.string.url, item.image))

@@ -6,4 +6,5 @@
     <string name="text">Text: %1$s</string>
     <string name="id">ID: %1$s</string>
     <string name="confidence">Confidence: %1$s</string>
+    <string name="image_for">Image for %1$s</string>
 </resources>

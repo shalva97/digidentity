@@ -3,7 +3,6 @@
 package com.github.shalva97.digidentity.presentation.screens.home
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,13 +12,9 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.paging.LoadState
@@ -37,14 +32,18 @@ fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>, onCatalogClick: (id: St
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            val pullToRefreshState = rememberPullToRefreshState()
             if (catalogsPaging.loadState.hasError)
                 Text(
                     modifier = Modifier.fillMaxWidth(),
                     textAlign = TextAlign.Center,
                     text = stringResource(R.string.something_went_wrong)
                 )
-            Box(modifier = Modifier.nestedScroll(pullToRefreshState.nestedScrollConnection)) {
+
+            PullToRefreshBox(
+                isRefreshing = catalogsPaging.loadState.refresh is LoadState.Loading,
+                onRefresh = {
+                    catalogsPaging.refresh()
+                }) {
                 LazyColumn(Modifier.fillMaxSize()) {
                     items(
                         catalogsPaging.itemCount,
@@ -61,20 +60,6 @@ fun HomeScreen(catalogsPaging: LazyPagingItems<Catalog>, onCatalogClick: (id: St
                         }
                     }
                 }
-                PullToRefreshContainer(
-                    state = pullToRefreshState,
-                    modifier = Modifier.align(Alignment.TopCenter)
-                )
-            }
-            if (pullToRefreshState.isRefreshing) {
-                LaunchedEffect(key1 = true) {
-//                catalogsPaging.refresh() // TODO
-                }
-            }
-            if (catalogsPaging.loadState.refresh is LoadState.Loading) {
-                pullToRefreshState.startRefresh()
-            } else {
-                pullToRefreshState.endRefresh()
             }
         }
     }
