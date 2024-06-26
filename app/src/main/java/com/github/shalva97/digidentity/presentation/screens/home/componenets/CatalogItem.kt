@@ -2,6 +2,8 @@ package com.github.shalva97.digidentity.presentation.screens.home.componenets
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
@@ -50,10 +52,11 @@ private fun ItemPreview(
 ) {
     DigidentityTheme {
         Surface {
-            // TODO
-//            CatalogList(
-//                state = HomeState.Catalogs(catalogs)
-//            )
+            LazyColumn {
+                items(catalogs) {
+                    CatalogItem(it)
+                }
+            }
         }
     }
 }

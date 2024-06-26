@@ -11,8 +11,6 @@ import com.github.shalva97.digidentity.data.catalog.local.CatalogDatabase
 import com.github.shalva97.digidentity.data.catalog.local.CatalogEntity
 import com.github.shalva97.digidentity.data.catalog.mappers.toEntity
 import com.github.shalva97.digidentity.domain.CatalogRepository
-import com.github.shalva97.digidentity.domain.models.Catalog
-import kotlinx.coroutines.delay
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
@@ -63,17 +61,4 @@ class CatalogRemoteMediator @Inject constructor(
             MediatorResult.Error(e)
         }
     }
-}
-
-var offset = 0
-
-suspend fun generateRandomData(): List<Catalog> {
-    val list = List(10) {
-        val id = offset + it
-        Catalog("$id.blah", 0.2f, "", id.toString())
-    }
-    offset += 10
-    println("--- generated 10 new items")
-    delay(1_000)
-    return list
 }

@@ -5,8 +5,6 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -41,22 +39,21 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DigidentityApp() {
     val navController = rememberNavController()
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-        NavHost(
-            modifier = Modifier.padding(innerPadding),
-            navController = navController,
-            startDestination = Home
-        ) {
-            composable<Home> {
-                val viewmodel: HomeViewModel = hiltViewModel()
-                val catalogsPaging = viewmodel.catalogs.collectAsLazyPagingItems()
-                HomeScreen(catalogsPaging)
-            }
-            composable<ItemDetails> {
-                val viewModel: DetailsViewModel = hiltViewModel()
-                val state by viewModel.state.collectAsState()
-                DetailsScreen(state)
-            }
+    NavHost(
+        modifier = Modifier.fillMaxSize(),
+        navController = navController,
+        startDestination = Home
+    ) {
+        composable<Home> {
+            val viewmodel: HomeViewModel = hiltViewModel()
+            val catalogsPaging = viewmodel.catalogs.collectAsLazyPagingItems()
+            HomeScreen(catalogsPaging)
+        }
+        composable<ItemDetails> {
+            val viewModel: DetailsViewModel = hiltViewModel()
+            val state by viewModel.state.collectAsState()
+            DetailsScreen(state)
         }
     }
+
 }
