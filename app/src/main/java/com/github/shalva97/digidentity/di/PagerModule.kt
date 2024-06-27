@@ -29,7 +29,7 @@ class PagerModule {
         catalogDb: CatalogDatabase,
     ): Flow<PagingData<Catalog>> {
         return Pager(
-            config = PagingConfig(10, prefetchDistance = 0, initialLoadSize = 10),
+            config = PagingConfig(10, prefetchDistance = 0, initialLoadSize = 20),
             remoteMediator = CatalogRemoteMediator(catalogAPI, catalogDb),
             pagingSourceFactory = {
                 catalogDb.dao.pagingSource()
