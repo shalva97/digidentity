@@ -16,7 +16,7 @@ android {
         minSdk = 25
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0"
+        versionName = "2.0"
 
         testInstrumentationRunner = "com.github.shalva97.digidentity.TestRunner"
         vectorDrawables {
