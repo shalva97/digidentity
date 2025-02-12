@@ -69,7 +69,7 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.6.0")
     implementation("androidx.paging:paging-compose:3.3.0")
     implementation("androidx.paging:paging-runtime-ktx:3.3.0")
-    testImplementation("androidx.paging:paging-common-ktx:3.3.0")
+    testImplementation("androidx.paging:paging-common-ktx:3.3.6")
     androidTestImplementation("androidx.paging:paging-testing:3.3.0")
     implementation("androidx.room:room-runtime:2.6.1")
     annotationProcessor("androidx.room:room-compiler:2.6.1")
